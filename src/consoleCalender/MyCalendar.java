@@ -19,22 +19,23 @@ public class MyCalendar {
 		System.out.println("Select one of the following main menu options:");
 		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
 		String output = input.next().toLowerCase();
-		if(output == "v") {
+		System.out.println(output);
+		if(output.equals("v")) {
 			view();
 		}
-		else if(output == "c") {
+		else if(output.equals("c")) {
 			createEvent();
 		}
-		else if(output == "g") {
+		else if(output.equals("g")) {
 			goTo();
 		}
-		else if(output == "e") {
+		else if(output.equals("e")) {
 			eventList();
 		}
-		else if(output == "d") {
+		else if(output.equals("d")) {
 			deleteEvent();
 		}
-		else if(output == "q") {
+		else if(output.equals("q")) {
 			quit();
 		}
 		else {
@@ -47,11 +48,15 @@ public class MyCalendar {
 		System.out.println("[D]ay view or [M]onth view ?");
 		LocalDate date = LocalDate.now();
 		String output = input.next().toLowerCase();
-		if(output == "d") {
+		if(output.equals("d")) {
 			dayView(date);
 		}
-		else if(output == "m") {
+		else if(output.equals("m")) {
 			monthView(date);
+		}
+		else {
+			System.out.println("Unknown command");
+			view();
 		}
 	}
 	
@@ -90,13 +95,13 @@ public class MyCalendar {
 		
 		System.out.println("[P]revious or [N]ext or [G]o back to the main menu ?");
 		String output = input.next().toLowerCase();
-		if(output == "p") {
+		if(output.equals("p")) {
 			dayView(date.minusDays(1));
 		}
-		else if(output == "n") {
+		else if(output.equals("n")) {
 			dayView(date.plusDays(1));
 		}
-		else if(output == "g") {
+		else if(output.equals("g")) {
 			displayMainMenu();
 		}
 	}
@@ -104,13 +109,13 @@ public class MyCalendar {
 		
 		System.out.println("[P]revious or [N]ext or [G]o back to the main menu ?");
 		String output = input.next().toLowerCase();
-		if(output == "p") {
+		if(output.equals("p")) {
 			dayView(date.minusMonths(1));
 		}
-		else if(output == "n") {
+		else if(output.equals("n")) {
 			dayView(date.plusMonths(1));
 		}
-		else if(output == "g") {
+		else if(output.equals("g")) {
 			displayMainMenu();
 		}	
 	}

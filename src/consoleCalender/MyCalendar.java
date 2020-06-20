@@ -3,16 +3,56 @@ import java.util.HashMap;
 import java.util.TreeSet;
 import java.time.LocalTime;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class MyCalendar {
+	private Scanner input = new Scanner(System.in);
 	private HashMap<String, TreeSet<Event>> eventsList;
-	//Read + create initial events
-	//View, Create, Go to, Event List, Delete Event, Quit
+	
+	public void InitialCalendar(String date) {
+		
+	}
+	public void loadEvents() {
+		System.out.println("Loading is done!");
+	}
 	public void displayMainMenu() {
+		System.out.println("Select one of the following main menu options:");
+		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
+		String output = input.next().toLowerCase();
+		if(output == "v") {
+			view();
+		}
+		else if(output == "c") {
+			createEvent();
+		}
+		else if(output == "g") {
+			goTo();
+		}
+		else if(output == "e") {
+			eventList();
+		}
+		else if(output == "d") {
+			deleteEvent();
+		}
+		else if(output == "q") {
+			quit();
+		}
+		else {
+			System.out.println("Unknown command. Please try again.");
+			displayMainMenu();
+		}
 		
 	}
 	public void view() {
-		
+		System.out.println("[D]ay view or [M]onth view ?");
+		LocalDate date = LocalDate.now();
+		String output = input.next().toLowerCase();
+		if(output == "d") {
+			dayView(date);
+		}
+		else if(output == "m") {
+			monthView(date);
+		}
 	}
 	
 	public void goTo() {
@@ -24,6 +64,14 @@ public class MyCalendar {
 	}
 	
 	public void createEvent() {
+		String eventName = askName();
+		LocalDate eventDate = askDate();
+		LocalTime eventStartTime = askStartTime();
+		LocalTime eventEndTime = askEndTime(eventStartTime);
+		Event newEvent = new Event(eventName, eventStartTime, eventEndTime, eventDate);
+		if(checkEventConflicts(newEvent)) {
+			//add to oneTimeEvent list
+		}
 		
 	}
 	
@@ -32,13 +80,39 @@ public class MyCalendar {
 	}
 	
 	public void quit() {
-		
+		System.out.println("Good Bye");
+		saveEvents();
+		input.close();
 	}
-	public void dayView(String date) {
+	public void dayView(LocalDate date) {
 		
+		//find all events on this day and print it out. If there's no events, print "no events" or something
+		
+		System.out.println("[P]revious or [N]ext or [G]o back to the main menu ?");
+		String output = input.next().toLowerCase();
+		if(output == "p") {
+			dayView(date.minusDays(1));
+		}
+		else if(output == "n") {
+			dayView(date.plusDays(1));
+		}
+		else if(output == "g") {
+			displayMainMenu();
+		}
 	}
-	public void monthView(String month) {
+	public void monthView(LocalDate date) {
 		
+		System.out.println("[P]revious or [N]ext or [G]o back to the main menu ?");
+		String output = input.next().toLowerCase();
+		if(output == "p") {
+			dayView(date.minusMonths(1));
+		}
+		else if(output == "n") {
+			dayView(date.plusMonths(1));
+		}
+		else if(output == "g") {
+			displayMainMenu();
+		}	
 	}
 	public boolean addEvent() {
 		return false;
@@ -61,12 +135,19 @@ public class MyCalendar {
 		
 	}
 	public String askName() {
-		return null;
+		System.out.println("Please enter the name of the event");
+		return input.nextLine();
 	}
 	public LocalTime askStartTime() {
 		return null;
 	}
-	public LocalTime askEndTime(LocalDate startTime) {
+	public LocalTime askEndTime(LocalTime startTime) {
 		return null;
+	}
+	public boolean checkEventConflicts(Event newEvent) {
+		return false;
+	}
+	public void run() {
+		displayMainMenu();
 	}
 }

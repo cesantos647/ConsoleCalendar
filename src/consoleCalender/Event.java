@@ -2,11 +2,14 @@ package consoleCalender;
 
 import java.time.LocalTime;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class Event implements Comparable<Event>{
 	
 	private String name;
 	private TimeInterval timeInterval;
 	private LocalDate date;
+	public static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("M/dd/yy");
+	public static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("kk:mm");
 	
 	public Event(String name, LocalTime st, LocalTime et, LocalDate date) {
 		this.name = name;

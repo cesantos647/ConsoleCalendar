@@ -13,7 +13,7 @@ public class RecurringEvent extends Event{
 	private String days;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	//Not actually, need to implement this basically a list of numbers that correspond to the days of the week.
+	//Not actually, need to implement this basicallt a list of numbers that correspond to the days of the week.
 	private String daysOfWeek;
 	//hashmap dayConverter that converts the MTWRFSA to actual numbers I can use
 	
@@ -43,9 +43,6 @@ public class RecurringEvent extends Event{
 		return endDate;
 	}
 	
-	public boolean isWithin(LocalDate date) {
-		return date.isAfter(getStartDate()) && date.isBefore(getEndDate()) || date.isEqual(getStartDate()) || date.isEqual(getEndDate());
-	}
 	//Don't need compareTo since date was set to startingDate
 
 }

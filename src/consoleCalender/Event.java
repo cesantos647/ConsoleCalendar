@@ -1,29 +1,46 @@
 package consoleCalender;
 
 import java.time.LocalTime;
-
+import java.time.LocalDate;
 public class Event implements Comparable<Event>{
-	//check conflicts
-	private String name;
-	private LocalTime startingTime;
-	private LocalTime endingTime;
-	private Boolean recurring;
 	
-	//Make 2 constructors, one for recurring events and one for one-time events
-	public Event() {
-		
+	private String name;
+	private TimeInterval timeInterval;
+	private LocalDate date;
+	
+	public Event(String name, LocalTime st, LocalTime et, LocalDate date) {
+		this.name = name;
+		this.timeInterval = new TimeInterval(st, et);
+		this.date = date;
 	}
 	
 	public String getName() {
 		return name;
 	}
-	public Boolean getRecurring() {
-		return recurring;
+	
+	public TimeInterval getTimeInterval() {
+		return timeInterval;
+	}
+	
+	public LocalDate getDate() {
+		return date;
 	}
 
 	@Override
-	public int compareTo(Event o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Event that) {
+		if(date == that.getDate()) {
+			return this.getTimeInterval().getStartTime().compareTo(that.getTimeInterval().getStartTime());
+		}
+		else {
+			return date.compareTo(that.getDate());
+		}
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Event event = (Event) obj;
+		return this.compareTo(event) == 0;
+	}
+	
+	
 }

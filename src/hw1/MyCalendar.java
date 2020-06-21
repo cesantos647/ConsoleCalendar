@@ -314,6 +314,9 @@ public class MyCalendar {
 		}
 		else {
 			//display events on that day
+			for(Event e: dayEvents) {
+				System.out.println(e.getName() + " : " + e.getTimeInterval().getStartTime() + "-" +e.getTimeInterval().getEndTime());
+			}
 			String name = askName();
 			//If can be found, delete. If not, deleteSingleEvent to start over
 			Event deletedSingleEvent = null;
@@ -328,6 +331,7 @@ public class MyCalendar {
 			}
 			else {
 				oneTimeEventList.remove(deletedSingleEvent);
+				System.out.println(deletedSingleEvent.getName() + " has been deletedq");
 			}
 			displayMainMenu();
 		}
@@ -408,7 +412,8 @@ public class MyCalendar {
 	}
 	public boolean checkEventConflicts(Event newEvent) {
 		for(Event e : oneTimeEventList) {
-			if(e.getTimeInterval().conflictsWith(newEvent.getTimeInterval())) {
+			if(e.getTimeInterval().conflictsWith(newEvent.getTimeInterval()) && e.getDate().equals(newEvent.getDate())) {
+				System.out.println(e.getName() + " conflicts");
 				return true;
 			}
 		}
@@ -416,6 +421,7 @@ public class MyCalendar {
 			if(re.getTimeInterval().conflictsWith(newEvent.getTimeInterval())) {
 				//If the date is within the RecurringEvent and if the day is within the daysOfWeek
 				if(re.isWithin(newEvent.getDate()) && re.getDaysOfWeek().contains(newEvent.getDate().getDayOfWeek())) {
+					System.out.println(re.getName() + " conflicts");
 					return true;
 				}
 			}

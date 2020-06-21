@@ -4,6 +4,7 @@ import java.util.TreeSet;
 import java.time.LocalTime;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.io.FileWriter;
@@ -15,8 +16,38 @@ public class MyCalendar {
 	private TreeSet<RecurringEvent> recurringEventList =  new TreeSet<>();
 	
 	public void printInitialCalendar() {
+		LocalDate current = LocalDate.now();
+		String monthYearHeader = "      " + current.getMonth().toString() + " " + current.getYear();
+		String weekHeader = "Mo Tu We Th Fr Sa Su";
+		LocalDate firstDay = LocalDate.of(current.getYear(), current.getMonth(), 1);
+		System.out.println(monthYearHeader + "\n" + weekHeader);
+		
+		LocalDate reference = firstDay;
+		for(int i = 1; i < reference.getDayOfWeek().getValue(); i++) {
+			System.out.print("   ");
+		}
+		while(reference.getMonth().equals(current.getMonth())) {
+			if(reference.getDayOfMonth() == current.getDayOfMonth()) {
+				System.out.print("{");
+			}
+			if(reference.getDayOfMonth() < 10) {
+				System.out.print(" ");
+			}
+			System.out.print(reference.getDayOfMonth());
+			if(reference.getDayOfMonth() == current.getDayOfMonth()) {
+				System.out.print("}");
+			}
+			System.out.print(" ");
+			if(reference.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+				System.out.print("\n");
+			}
+			
+			reference = reference.plusDays(1);
+		}
+		System.out.println();
 		
 	}
+	
 	public void populateEvents() {
 		try {
 			
@@ -33,14 +64,14 @@ public class MyCalendar {
 					oneTimeEventList.add(newEvent);
 				}
 				//recurring event
-				if(params.length == 5) {
+				else if(params.length == 5) {
 					String days = params[0];
 					LocalTime startTime = LocalTime.parse(params[1], Event.TIMEFORMATTER);
 					LocalTime endTime = LocalTime.parse(params[2], Event.TIMEFORMATTER);
 					LocalDate startDate = LocalDate.parse(params[3], Event.DATEFORMATTER);
 					LocalDate endDate = LocalDate.parse(params[4], Event.DATEFORMATTER);
 					RecurringEvent newEvent = new RecurringEvent(name, days, startTime, endTime, startDate, endDate);
-					recurringEventList.add(newEvent);
+					recurringEventList.add(newEvent);				
 				}
 			}
 			eventLoader.close();
@@ -51,6 +82,7 @@ public class MyCalendar {
 			System.out.println("File not found");
 		}
 	}
+	
 	public void displayMainMenu() {
 		System.out.println("Select one of the following main menu options:");
 		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
@@ -78,6 +110,7 @@ public class MyCalendar {
 			displayMainMenu();
 		}
 	}
+	
 	public void view() {
 		System.out.println("[D]ay view or [M]onth view ?");
 		LocalDate date = LocalDate.now();
@@ -100,7 +133,6 @@ public class MyCalendar {
 	}
 	
 	public void eventList() {
-		//print out all of the events
 		System.out.println("One Time Events");
 		for(Event e: oneTimeEventList) {
 			System.out.println(e);
@@ -120,7 +152,6 @@ public class MyCalendar {
 		LocalTime eventEndTime = askEndTime(eventStartTime);
 		Event newEvent = new Event(eventName, eventStartTime, eventEndTime, eventDate);
 		if(!checkEventConflicts(newEvent)) {
-			//add to oneTimeEvent list
 			oneTimeEventList.add(newEvent);
 			System.out.println("'" + newEvent.getName() + "' has been added to the calendar");
 		}
@@ -155,10 +186,30 @@ public class MyCalendar {
 		input.close();
 		System.exit(0);
 	}
+	
 	public void dayView(LocalDate date) {
 		
-		//find all events on this day and print it out. If there's no events, print "no events" or something
-		
+		TreeSet<Event> dayEvents = new TreeSet<>();
+		for(Event e: oneTimeEventList) {
+			if(e.getDate().equals(date)) {
+				dayEvents.add(e);
+			}
+		}
+		for(RecurringEvent re: recurringEventList) {
+			if(re.isWithin(date) && re.getDaysOfWeek().contains(date.getDayOfWeek())) {
+				dayEvents.add(re);
+			}
+		}
+		System.out.println(date.format(Event.FORMALDATEFORMATTER));
+		if(dayEvents.isEmpty()) {
+			System.out.println("There are no events scheduled for today");
+		}
+		else {
+			//Display events
+			for(Event e: dayEvents) {
+				System.out.println(e.getName() + " : " + e.getTimeInterval().getStartTime() + "-" +e.getTimeInterval().getEndTime());
+			}
+		}
 		System.out.println("[P]revious or [N]ext or [G]o back to the main menu ?");
 		String output = input.nextLine().toLowerCase();
 		if(output.equals("p")) {
@@ -170,16 +221,54 @@ public class MyCalendar {
 		else if(output.equals("g")) {
 			displayMainMenu();
 		}
+		else {
+			System.out.println("Unknown command. Sending you back to the main menu");
+			displayMainMenu();
+		}
 	}
 	public void monthView(LocalDate date) {
 		//print out month view
+		String monthYearHeader = "      " + date.getMonth().toString() + " " + date.getYear();
+		String weekHeader = "Mo Tu We Th Fr Sa Su";
+		LocalDate firstDay = LocalDate.of(date.getYear(), date.getMonth(), 1);
+		System.out.println(monthYearHeader + "\n" + weekHeader);
+		
+		LocalDate reference = firstDay;
+		for(int i = 1; i < reference.getDayOfWeek().getValue(); i++) {
+			System.out.print("   ");
+		}
+		while(reference.getMonth().equals(date.getMonth())) {
+			
+			
+			if(hasEvents(reference)) {
+				System.out.print("{");
+			}
+			else if(reference.getDayOfMonth() < 10) {
+				System.out.print(" ");
+			}
+			System.out.print(reference.getDayOfMonth());
+			if(hasEvents(reference)) {
+				System.out.print("}");
+			}
+			else {
+				System.out.print(" ");
+			}
+			if(reference.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+				System.out.print("\n");
+			}
+			
+			reference = reference.plusDays(1);
+		}
+		System.out.println();
+		
+		
 		System.out.println("[P]revious or [N]ext or [G]o back to the main menu ?");
 		String output = input.nextLine().toLowerCase();
 		if(output.equals("p")) {
-			dayView(date.minusMonths(1));
+			monthView(date.minusMonths(1));
 		}
 		else if(output.equals("n")) {
-			dayView(date.plusMonths(1));
+			monthView(date.plusMonths(1));
 		}
 		else if(output.equals("g")) {
 			displayMainMenu();
@@ -189,27 +278,92 @@ public class MyCalendar {
 			displayMainMenu();
 		}
 	}
-	public boolean addEvent() {
-		return false;
-		
+	public boolean hasEvents(LocalDate date) {
+		TreeSet<Event> dayEvents = new TreeSet<>();
+		for(Event e: oneTimeEventList) {
+			if(e.getDate().equals(date)) {
+				dayEvents.add(e);
+			}
+		}
+		for(RecurringEvent re: recurringEventList) {
+			if(re.isWithin(date) && re.getDaysOfWeek().contains(date.getDayOfWeek())) {
+				dayEvents.add(re);
+			}
+		}
+		return !dayEvents.isEmpty();
 	}
+
 	public void deleteSingleEvent() {
 		LocalDate date = askDate();
-		//display events on that day
-		String name = askName();
-		//If can be found, delete. If not, deleteSingleEvent to start over
-		displayMainMenu();
+		TreeSet<Event> dayEvents = new TreeSet<>();
+		for(Event e: oneTimeEventList) {
+			if(e.getDate().equals(date)) {
+				dayEvents.add(e);
+			}
+		}
+		for(RecurringEvent re: recurringEventList) {
+			if(re.isWithin(date) && re.getDaysOfWeek().contains(date.getDayOfWeek())) {
+				dayEvents.add(re);
+			}
+		}
+		System.out.println(date.format(Event.FORMALDATEFORMATTER));
+		if(dayEvents.isEmpty()) {
+			System.out.println("There are no events scheduled for today");
+			System.out.println("Because there is no events today, you cannot remove any events. Sending you back to the main menu.");
+			displayMainMenu();
+		}
+		else {
+			//display events on that day
+			String name = askName();
+			//If can be found, delete. If not, deleteSingleEvent to start over
+			Event deletedSingleEvent = null;
+			for(Event e: dayEvents) {
+				if(e.getName().equalsIgnoreCase(name)) {
+					deletedSingleEvent = e;
+				}
+			}
+			if(deletedSingleEvent == null) {
+				System.out.println("The event cannot be found. Please try again.");
+				deleteSingleEvent();
+			}
+			else {
+				oneTimeEventList.remove(deletedSingleEvent);
+			}
+			displayMainMenu();
+		}
 	}
 	public void deleteAllOnDate() {
+		TreeSet<Event> deletedEvents = new TreeSet<>();
 		LocalDate date = askDate();
+		for(Event e: oneTimeEventList) {
+			if(e.getDate().equals(date)) {
+				deletedEvents.add(e);
+			}
+		}
 		//delete all events
+		oneTimeEventList.removeAll(deletedEvents);
+		System.out.println("All events on " + date.format(Event.FORMALDATEFORMATTER) + " have been deleted");
 		displayMainMenu();
 	}
+	
 	public void deleteRecurring() {
 		String name = askName();
-		//delete recurringEvent
+		TreeSet<RecurringEvent> deletedEvent = new TreeSet<>();
+		for(RecurringEvent re: recurringEventList) {
+			if(re.getName().equalsIgnoreCase(name)) {
+				deletedEvent.add(re);
+			}
+ 		}
+		if(deletedEvent.isEmpty()) {
+			System.out.println("There is no recurring event by that name. You will be sent back to the main menu");
+		}
+		else {
+			recurringEventList.removeAll(deletedEvent);
+			System.out.println("The" + name + " recurring event has been deleted");
+		}
 		displayMainMenu();
 	}
+	
 	public void saveEvents() {
 		try {
 			File output = new File("output.txt");
@@ -253,6 +407,19 @@ public class MyCalendar {
 		}
 	}
 	public boolean checkEventConflicts(Event newEvent) {
+		for(Event e : oneTimeEventList) {
+			if(e.getTimeInterval().conflictsWith(newEvent.getTimeInterval())) {
+				return true;
+			}
+		}
+		for(RecurringEvent re : recurringEventList) {
+			if(re.getTimeInterval().conflictsWith(newEvent.getTimeInterval())) {
+				//If the date is within the RecurringEvent and if the day is within the daysOfWeek
+				if(re.isWithin(newEvent.getDate()) && re.getDaysOfWeek().contains(newEvent.getDate().getDayOfWeek())) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

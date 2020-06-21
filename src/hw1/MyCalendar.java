@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class MyCalendar {
 	private Scanner input = new Scanner(System.in);
@@ -18,7 +20,7 @@ public class MyCalendar {
 	public void populateEvents() {
 		try {
 			
-			Scanner eventLoader = new Scanner(new File("src/hw1/events.txt"));
+			Scanner eventLoader = new Scanner(new File("events.txt"));
 			while(eventLoader.hasNextLine()) {
 				String name = eventLoader.nextLine();
 				String[] params = eventLoader.nextLine().split(" ");
@@ -117,8 +119,10 @@ public class MyCalendar {
 		LocalTime eventStartTime = askStartTime();
 		LocalTime eventEndTime = askEndTime(eventStartTime);
 		Event newEvent = new Event(eventName, eventStartTime, eventEndTime, eventDate);
-		if(checkEventConflicts(newEvent)) {
+		if(!checkEventConflicts(newEvent)) {
 			//add to oneTimeEvent list
+			oneTimeEventList.add(newEvent);
+			System.out.println("'" + newEvent.getName() + "' has been added to the calendar");
 		}
 		displayMainMenu();
 		
@@ -207,7 +211,21 @@ public class MyCalendar {
 		displayMainMenu();
 	}
 	public void saveEvents() {
-		
+		try {
+			File output = new File("output.txt");
+			output.createNewFile();
+			FileWriter writer = new FileWriter(output);
+			for(Event e: oneTimeEventList) {
+				writer.write(e.toString() + "\n");
+			}
+			for(RecurringEvent re: recurringEventList) {
+				writer.write(re.toString() + "\n");
+			}
+			writer.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	public LocalDate askDate() {
 		System.out.println("Please enter the date you want in the form MM/DD/YY");

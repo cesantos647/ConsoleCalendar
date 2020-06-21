@@ -52,7 +52,7 @@ public class RecurringEvent extends Event{
 	}
 	@Override
 	public String toString() {
-		return this.getName() + "\n" + this.getTimeInterval() + " " + this.getStartDate().format(Event.DATEFORMATTER) + " " + this.getEndDate().format(Event.DATEFORMATTER);
+		return this.getName() + "\n" + days + " " + this.getTimeInterval() + " " + this.getStartDate().format(Event.DATEFORMATTER) + " " + this.getEndDate().format(Event.DATEFORMATTER);
 	}
 
 }

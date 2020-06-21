@@ -1,7 +1,7 @@
 /**
  * 
  */
-package consoleCalender;
+package hw1;
 import java.time.LocalTime;
 import java.time.LocalDate;
 
@@ -20,6 +20,9 @@ public class RecurringEvent extends Event{
 	
 	public RecurringEvent(String name, String days, LocalTime st, LocalTime et, LocalDate startDate, LocalDate endDate) {
 		super(name, st, et, startDate);
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.days = days;
 		
 	}
 
@@ -46,6 +49,10 @@ public class RecurringEvent extends Event{
 	
 	public boolean isWithin(LocalDate date) {
 		return date.isAfter(getStartDate()) && date.isBefore(getEndDate()) || date.isEqual(getStartDate()) || date.isEqual(getEndDate());
+	}
+	@Override
+	public String toString() {
+		return this.getName() + "\n" + this.getTimeInterval() + " " + this.getStartDate().format(Event.DATEFORMATTER) + " " + this.getEndDate().format(Event.DATEFORMATTER);
 	}
 
 }

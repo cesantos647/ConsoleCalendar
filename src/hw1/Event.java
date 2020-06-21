@@ -1,4 +1,4 @@
-package consoleCalender;
+package hw1;
 
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ public class Event implements Comparable<Event>{
 	private String name;
 	private TimeInterval timeInterval;
 	private LocalDate date;
-	public static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("M/dd/yy");
+	public static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("M/d/yy");
 	public static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("k:mm");
 	
 	public Event(String name, LocalTime st, LocalTime et, LocalDate date) {
@@ -45,5 +45,9 @@ public class Event implements Comparable<Event>{
 		return this.compareTo(event) == 0;
 	}
 	
+	@Override
+	public String toString() {
+		return getName() + "\n" + getTimeInterval() + " " + getDate().format(Event.DATEFORMATTER);
+	}
 	
 }

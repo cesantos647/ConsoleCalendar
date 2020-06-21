@@ -1,4 +1,4 @@
-package consoleCalender;
+package hw1;
 
 import java.util.TreeSet;
 import java.time.LocalTime;
@@ -17,9 +17,9 @@ public class MyCalendar {
 	}
 	public void populateEvents() {
 		try {
-			System.out.println(new File("event.txt").exists());
-			Scanner eventLoader = new Scanner(new File("events"));
-			while(eventLoader.hasNext()) {
+			
+			Scanner eventLoader = new Scanner(new File("src/hw1/events.txt"));
+			while(eventLoader.hasNextLine()) {
 				String name = eventLoader.nextLine();
 				String[] params = eventLoader.nextLine().split(" ");
 				//one time event
@@ -42,6 +42,7 @@ public class MyCalendar {
 				}
 			}
 			eventLoader.close();
+	
 			System.out.println("Loading is done!");
 		}
 		catch(FileNotFoundException e){
@@ -74,7 +75,6 @@ public class MyCalendar {
 			System.out.println("Unknown command. Please try again.");
 			displayMainMenu();
 		}
-		
 	}
 	public void view() {
 		System.out.println("[D]ay view or [M]onth view ?");
@@ -99,6 +99,15 @@ public class MyCalendar {
 	
 	public void eventList() {
 		//print out all of the events
+		System.out.println("One Time Events");
+		for(Event e: oneTimeEventList) {
+			System.out.println(e);
+		}
+		System.out.println("\n Recurring Events");
+		for(RecurringEvent re: recurringEventList) {
+			System.out.println(re);
+		}
+		System.out.println();
 		displayMainMenu();
 	}
 	
@@ -228,9 +237,7 @@ public class MyCalendar {
 	public boolean checkEventConflicts(Event newEvent) {
 		return false;
 	}
-	public boolean checkEventConflicts(RecurringEvent newEvent) {
-		return false;
-	}
+
 	public void run() {
 		printInitialCalendar();
 		populateEvents();

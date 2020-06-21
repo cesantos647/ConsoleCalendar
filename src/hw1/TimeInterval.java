@@ -1,4 +1,4 @@
-package consoleCalender;
+package hw1;
 
 import java.time.LocalTime;;
 
@@ -27,6 +27,11 @@ public class TimeInterval {
 
 	public boolean conflictsWith(TimeInterval that) {
 		return this.getStartTime().isBefore(that.getEndTime()) || this.getEndTime().isAfter(that.getStartTime());
+	}
+	
+	@Override
+	public String toString() {
+		return startTime + " " + endTime;
 	}
 
 }

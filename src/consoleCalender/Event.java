@@ -9,7 +9,7 @@ public class Event implements Comparable<Event>{
 	private TimeInterval timeInterval;
 	private LocalDate date;
 	public static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("M/dd/yy");
-	public static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("kk:mm");
+	public static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("k:mm");
 	
 	public Event(String name, LocalTime st, LocalTime et, LocalDate date) {
 		this.name = name;

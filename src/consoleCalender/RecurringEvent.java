@@ -10,6 +10,7 @@ import java.time.LocalDate;
  *
  */
 public class RecurringEvent extends Event{
+	//UNFINISHED
 	private String days;
 	private LocalDate startDate;
 	private LocalDate endDate;
@@ -46,6 +47,5 @@ public class RecurringEvent extends Event{
 	public boolean isWithin(LocalDate date) {
 		return date.isAfter(getStartDate()) && date.isBefore(getEndDate()) || date.isEqual(getStartDate()) || date.isEqual(getEndDate());
 	}
-	//Don't need compareTo since date was set to startingDate
 
 }

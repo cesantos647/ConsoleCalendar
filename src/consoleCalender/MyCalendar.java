@@ -2,6 +2,8 @@ package consoleCalender;
 
 import java.util.TreeSet;
 import java.time.LocalTime;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -14,7 +16,37 @@ public class MyCalendar {
 		
 	}
 	public void populateEvents() {
-		System.out.println("Loading is done!");
+		try {
+			System.out.println(new File("event.txt").exists());
+			Scanner eventLoader = new Scanner(new File("events"));
+			while(eventLoader.hasNext()) {
+				String name = eventLoader.nextLine();
+				String[] params = eventLoader.nextLine().split(" ");
+				//one time event
+				if(params.length == 3) {
+					LocalDate date = LocalDate.parse(params[0], Event.DATEFORMATTER);
+					LocalTime startTime = LocalTime.parse(params[1], Event.TIMEFORMATTER);
+					LocalTime endTime = LocalTime.parse(params[2], Event.TIMEFORMATTER);
+					Event newEvent = new Event(name, startTime, endTime, date);
+					oneTimeEventList.add(newEvent);
+				}
+				//recurring event
+				if(params.length == 5) {
+					String days = params[0];
+					LocalTime startTime = LocalTime.parse(params[1], Event.TIMEFORMATTER);
+					LocalTime endTime = LocalTime.parse(params[2], Event.TIMEFORMATTER);
+					LocalDate startDate = LocalDate.parse(params[3], Event.DATEFORMATTER);
+					LocalDate endDate = LocalDate.parse(params[4], Event.DATEFORMATTER);
+					RecurringEvent newEvent = new RecurringEvent(name, days, startTime, endTime, startDate, endDate);
+					recurringEventList.add(newEvent);
+				}
+			}
+			eventLoader.close();
+			System.out.println("Loading is done!");
+		}
+		catch(FileNotFoundException e){
+			System.out.println("File not found");
+		}
 	}
 	public void displayMainMenu() {
 		System.out.println("Select one of the following main menu options:");
@@ -194,6 +226,9 @@ public class MyCalendar {
 		}
 	}
 	public boolean checkEventConflicts(Event newEvent) {
+		return false;
+	}
+	public boolean checkEventConflicts(RecurringEvent newEvent) {
 		return false;
 	}
 	public void run() {

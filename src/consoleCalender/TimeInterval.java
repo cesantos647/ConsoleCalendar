@@ -24,10 +24,9 @@ public class TimeInterval {
 	public LocalTime getEndTime() {
 		return endTime;
 	}
-	
-	//Not sure if this is right, please check again.
+
 	public boolean conflictsWith(TimeInterval that) {
-		return startTime.compareTo(that.getEndTime()) > 0 && endTime.compareTo(that.getStartTime()) < 0;		
+		return this.getStartTime().isBefore(that.getEndTime()) || this.getEndTime().isAfter(that.getStartTime());
 	}
 
 }

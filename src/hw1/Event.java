@@ -10,6 +10,7 @@ public class Event implements Comparable<Event>{
 	private LocalDate date;
 	public static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("M/d/yy");
 	public static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("k:mm");
+	public static DateTimeFormatter FORMALDATEFORMATTER = DateTimeFormatter.ofPattern("E, MMM d yyyy");
 	
 	public Event(String name, LocalTime st, LocalTime et, LocalDate date) {
 		this.name = name;
@@ -31,7 +32,7 @@ public class Event implements Comparable<Event>{
 
 	@Override
 	public int compareTo(Event that) {
-		if(date == that.getDate()) {
+		if(date.equals(that.getDate())) {
 			return this.getTimeInterval().getStartTime().compareTo(that.getTimeInterval().getStartTime());
 		}
 		else {

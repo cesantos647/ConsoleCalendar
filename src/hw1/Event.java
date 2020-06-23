@@ -7,9 +7,9 @@ import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Event.
+ * The Class Event holds the event details for a one-time event
+ * and the DateTimeFormatter static variable to format a the event details
  */
 public class Event implements Comparable<Event>{
 	
@@ -22,22 +22,22 @@ public class Event implements Comparable<Event>{
 	/** The date. */
 	private LocalDate date;
 	
-	/** The dateformatter. */
+	/** The regular Date formatter. */
 	public static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("M/d/yy");
 	
-	/** The timeformatter. */
+	/** The Time formatter. */
 	public static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("k:mm");
 	
-	/** The formaldateformatter. */
+	/** The Formal Date formatter. */
 	public static DateTimeFormatter FORMALDATEFORMATTER = DateTimeFormatter.ofPattern("E, MMM d yyyy");
 	
 	/**
 	 * Instantiates a new event.
 	 *
-	 * @param name the name
-	 * @param st the st
-	 * @param et the et
-	 * @param date the date
+	 * @param name the name of the event
+	 * @param st the start time of the event
+	 * @param et the end time of the event
+	 * @param date the date of the event
 	 */
 	public Event(String name, LocalTime st, LocalTime et, LocalDate date) {
 		this.name = name;
@@ -73,10 +73,11 @@ public class Event implements Comparable<Event>{
 	}
 
 	/**
-	 * Compare to.
+	 * Compares this event to another event.
+	 * First compare by date, then compare by time intervals
 	 *
-	 * @param that the that
-	 * @return the int
+	 * @param that the other event being compared with
+	 * @return the the result of the comparison
 	 */
 	@Override
 	public int compareTo(Event that) {
@@ -89,10 +90,10 @@ public class Event implements Comparable<Event>{
 	}
 
 	/**
-	 * Equals.
+	 * Checks if the object is equal to this event
 	 *
-	 * @param obj the obj
-	 * @return true, if successful
+	 * @param obj the given object
+	 * @return true, if the object is equal to this event
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -101,9 +102,9 @@ public class Event implements Comparable<Event>{
 	}
 	
 	/**
-	 * To string.
+	 * Converts Event object to a readable string
 	 *
-	 * @return the string
+	 * @return the readable string
 	 */
 	@Override
 	public String toString() {

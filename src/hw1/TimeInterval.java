@@ -1,5 +1,11 @@
-/*
- * 
+/**
+ * TimeInterval Class
+ *  @author Christian Santos
+ *  
+ *  @version 1.0.0 06/22/20
+ *  
+ *  Copyright Christian Santos to Present
+ *  All rights reserved
  */
 package hw1;
 
@@ -10,6 +16,8 @@ import java.time.LocalTime;;
  * The Class TimeInterval contains the start and end time
  * of a time interval and finds time conflicts between other
  * TimeInterval objects.
+ * 
+ * @author Christian Santos
  */
 public class TimeInterval {
 	

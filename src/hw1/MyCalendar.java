@@ -1,5 +1,11 @@
-/*
- * 
+/**
+ *  MyCalendar Class
+ *  @author Christian Santos
+ *  
+ *  @version 1.0.0 06/22/20
+ *  
+ *  Copyright Christian Santos to Present
+ *  All rights reserved
  */
 package hw1;
 
@@ -17,6 +23,8 @@ import java.io.IOException;
  * The Class MyCalendar manages the event list,
  * takes input from the user, and carries out
  * user commands
+ * 
+ * @author Christian Santos
  */
 public class MyCalendar {
 	

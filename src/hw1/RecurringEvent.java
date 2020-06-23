@@ -1,5 +1,11 @@
 /**
- * 
+ *  RecurringEvent Class
+ *  @author Christian Santos
+ *  
+ *  @version 1.0.0 06/22/20
+ *  
+ *  Copyright Christian Santos to Present
+ *  All rights reserved
  */
 package hw1;
 import java.time.LocalTime;
@@ -12,7 +18,7 @@ import java.util.HashMap;
  * The Class RecurringEvent is an inherited class of Event
  * and it managed extra event details specifically for recurring events
  *
- * @author christiansantos
+ * @author Christian Santos
  */
 public class RecurringEvent extends Event{
 	

@@ -1,5 +1,11 @@
-/*
- * 
+/**
+ *  Event Class
+ *  @author Christian Santos
+ *  
+ *  @version 1.0.0 06/22/20
+ *  
+ *  Copyright Christian Santos to Present
+ *  All rights reserved
  */
 package hw1;
 
@@ -10,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 /**
  * The Class Event holds the event details for a one-time event
  * and the DateTimeFormatter static variable to format a the event details
+ * 
+ * @author Christian Santos
  */
 public class Event implements Comparable<Event>{
 	

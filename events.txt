@@ -1,12 +1,20 @@
-CS151 Lecture
-TR 10:30 11:45 1/23/20 5/7/20
-CS157C Lecture
-MW 11:45 13:15 1/27/20 5/6/20
-Interview at BigCorp 
-9/28/20 9:30 11:30
-Dentist appt
-10/3/20 16:15 17:00
-Course Committee Meeting
-F 18:30 20:30 1/27/20 5/13/20
-Something something something
-10/25/20 10:20 11:20
+CS 151 Lecture
+TR 9:00 11:00 6/02/20 8/07/20
+CS 100W Lecture
+MA 9:00 11:00 6/01/20 8/07/20
+Internship
+FS 8:00 13:00 7/29/20 10/15/20
+Clean Garden
+7/25/20 12:00 13:00
+Doctor Appointment
+6/25/20 14:00 15:30
+Grocery Shopping
+A 16:00 17:15 6/15/20 12/13/20
+Go For Walk
+WTS 19:00 20:00 5/20/20 12/10/20
+Interview
+06/15/20 13:00 14:50
+CS 151 Project 1
+06/22/20 22:00 23:00
+Hackathon
+10/17/20 1:00 10:00

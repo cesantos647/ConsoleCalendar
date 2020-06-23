@@ -9,14 +9,25 @@ import java.util.HashSet;
 import java.util.HashMap;
 
 /**
- * @author christiansantos
+ * The Class RecurringEvent.
  *
+ * @author christiansantos
  */
 public class RecurringEvent extends Event{
+	
+	/** The days. */
 	private String days;
+	
+	/** The start date. */
 	private LocalDate startDate;
+	
+	/** The end date. */
 	private LocalDate endDate;
+	
+	/** The days of week. */
 	private HashSet<DayOfWeek> daysOfWeek = new HashSet<>();
+	
+	/** The Constant dayConverter. */
 	private static final HashMap<String, DayOfWeek> dayConverter = new HashMap<>();
 	static {
 		dayConverter.put("M", DayOfWeek.MONDAY);
@@ -28,6 +39,16 @@ public class RecurringEvent extends Event{
 		dayConverter.put("S", DayOfWeek.SUNDAY);
 	}
 	
+	/**
+	 * Instantiates a new recurring event.
+	 *
+	 * @param name the name
+	 * @param days the days
+	 * @param st the st
+	 * @param et the et
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 */
 	public RecurringEvent(String name, String days, LocalTime st, LocalTime et, LocalDate startDate, LocalDate endDate) {
 		super(name, st, et, startDate);
 		this.startDate = startDate;
@@ -39,11 +60,18 @@ public class RecurringEvent extends Event{
 		}
 	}
 	
+	/**
+	 * Gets the days of week.
+	 *
+	 * @return the days of week
+	 */
 	public HashSet<DayOfWeek> getDaysOfWeek() {
 		return daysOfWeek;
 	}
 
 	/**
+	 * Gets the days.
+	 *
 	 * @return the days
 	 */
 	public String getDays() {
@@ -51,6 +79,8 @@ public class RecurringEvent extends Event{
 	}
 
 	/**
+	 * Gets the start date.
+	 *
 	 * @return the startDate
 	 */
 	public LocalDate getStartDate() {
@@ -58,15 +88,29 @@ public class RecurringEvent extends Event{
 	}
 
 	/**
+	 * Gets the end date.
+	 *
 	 * @return the endDate
 	 */
 	public LocalDate getEndDate() {
 		return endDate;
 	}
 	
+	/**
+	 * Checks if is within.
+	 *
+	 * @param date the date
+	 * @return true, if is within
+	 */
 	public boolean isWithin(LocalDate date) {
 		return date.isAfter(getStartDate()) && date.isBefore(getEndDate()) || date.isEqual(getStartDate()) || date.isEqual(getEndDate());
 	}
+	
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return this.getName() + "\n" + days + " " + this.getTimeInterval() + " " + this.getStartDate().format(Event.DATEFORMATTER) + " " + this.getEndDate().format(Event.DATEFORMATTER);

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package hw1;
 
 import java.util.TreeSet;
@@ -10,11 +13,23 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * The Class MyCalendar.
+ */
 public class MyCalendar {
+	
+	/** The input. */
 	private Scanner input = new Scanner(System.in);
+	
+	/** The one time event list. */
 	private TreeSet<Event> oneTimeEventList = new TreeSet<>();
+	
+	/** The recurring event list. */
 	private TreeSet<RecurringEvent> recurringEventList =  new TreeSet<>();
 	
+	/**
+	 * Prints the initial calendar.
+	 */
 	public void printInitialCalendar() {
 		LocalDate current = LocalDate.now();
 		String monthYearHeader = "      " + current.getMonth().toString() + " " + current.getYear();
@@ -48,6 +63,9 @@ public class MyCalendar {
 		
 	}
 	
+	/**
+	 * Populate events.
+	 */
 	public void populateEvents() {
 		try {
 			
@@ -83,6 +101,9 @@ public class MyCalendar {
 		}
 	}
 	
+	/**
+	 * Display main menu.
+	 */
 	public void displayMainMenu() {
 		System.out.println("Select one of the following main menu options:");
 		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
@@ -111,6 +132,9 @@ public class MyCalendar {
 		}
 	}
 	
+	/**
+	 * View.
+	 */
 	public void view() {
 		System.out.println("[D]ay view or [M]onth view ?");
 		LocalDate date = LocalDate.now();
@@ -127,11 +151,17 @@ public class MyCalendar {
 		}
 	}
 	
+	/**
+	 * Go to.
+	 */
 	public void goTo() {
 		LocalDate newDate = askDate();
 		dayView(newDate);
 	}
 	
+	/**
+	 * Event list.
+	 */
 	public void eventList() {
 		System.out.println("One Time Events");
 		for(Event e: oneTimeEventList) {
@@ -145,6 +175,9 @@ public class MyCalendar {
 		displayMainMenu();
 	}
 	
+	/**
+	 * Creates the event.
+	 */
 	public void createEvent() {
 		String eventName = askName();
 		LocalDate eventDate = askDate();
@@ -155,10 +188,16 @@ public class MyCalendar {
 			oneTimeEventList.add(newEvent);
 			System.out.println("'" + newEvent.getName() + "' has been added to the calendar");
 		}
+		else {
+			System.out.println("There are conflicts creating this event. Sending you back to the main menu");
+		}
 		displayMainMenu();
 		
 	}
 	
+	/**
+	 * Delete event.
+	 */
 	public void deleteEvent() {
 		System.out.println("Delete [S]elected  [A]ll   [DR]ecurring ? You may also [G]o back");
 		String output = input.nextLine().toLowerCase();
@@ -180,6 +219,9 @@ public class MyCalendar {
 		}
 	}
 	
+	/**
+	 * Quit.
+	 */
 	public void quit() {
 		System.out.println("Good Bye");
 		saveEvents();
@@ -187,6 +229,11 @@ public class MyCalendar {
 		System.exit(0);
 	}
 	
+	/**
+	 * Day view.
+	 *
+	 * @param date the date
+	 */
 	public void dayView(LocalDate date) {
 		
 		TreeSet<Event> dayEvents = new TreeSet<>();
@@ -226,6 +273,12 @@ public class MyCalendar {
 			displayMainMenu();
 		}
 	}
+	
+	/**
+	 * Month view.
+	 *
+	 * @param date the date
+	 */
 	public void monthView(LocalDate date) {
 		//print out month view
 		String monthYearHeader = "      " + date.getMonth().toString() + " " + date.getYear();
@@ -278,6 +331,13 @@ public class MyCalendar {
 			displayMainMenu();
 		}
 	}
+	
+	/**
+	 * Checks for events.
+	 *
+	 * @param date the date
+	 * @return true, if successful
+	 */
 	public boolean hasEvents(LocalDate date) {
 		TreeSet<Event> dayEvents = new TreeSet<>();
 		for(Event e: oneTimeEventList) {
@@ -293,6 +353,9 @@ public class MyCalendar {
 		return !dayEvents.isEmpty();
 	}
 
+	/**
+	 * Delete single event.
+	 */
 	public void deleteSingleEvent() {
 		LocalDate date = askDate();
 		TreeSet<Event> dayEvents = new TreeSet<>();
@@ -331,11 +394,15 @@ public class MyCalendar {
 			}
 			else {
 				oneTimeEventList.remove(deletedSingleEvent);
-				System.out.println(deletedSingleEvent.getName() + " has been deletedq");
+				System.out.println(deletedSingleEvent.getName() + " has been deleted");
 			}
 			displayMainMenu();
 		}
 	}
+	
+	/**
+	 * Delete all on date.
+	 */
 	public void deleteAllOnDate() {
 		TreeSet<Event> deletedEvents = new TreeSet<>();
 		LocalDate date = askDate();
@@ -350,6 +417,9 @@ public class MyCalendar {
 		displayMainMenu();
 	}
 	
+	/**
+	 * Delete recurring.
+	 */
 	public void deleteRecurring() {
 		String name = askName();
 		TreeSet<RecurringEvent> deletedEvent = new TreeSet<>();
@@ -368,6 +438,9 @@ public class MyCalendar {
 		displayMainMenu();
 	}
 	
+	/**
+	 * Save events.
+	 */
 	public void saveEvents() {
 		try {
 			File output = new File("output.txt");
@@ -385,22 +458,47 @@ public class MyCalendar {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Ask date.
+	 *
+	 * @return the local date
+	 */
 	public LocalDate askDate() {
 		System.out.println("Please enter the date you want in the form MM/DD/YY");
 		return LocalDate.parse(input.nextLine(), Event.DATEFORMATTER);
 		
 	}
+	
+	/**
+	 * Ask name.
+	 *
+	 * @return the string
+	 */
 	public String askName() {
 		System.out.println("Please enter the name of the event");
 		String output = input.nextLine();
 		return output;
 	}
+	
+	/**
+	 * Ask start time.
+	 *
+	 * @return the local time
+	 */
 	public LocalTime askStartTime() {
-		System.out.println("Please input the startTime in the 24 hour format HH:MM");
+		System.out.println("Please input the start time in the 24 hour format HH:MM");
 		return LocalTime.parse(input.nextLine(), Event.TIMEFORMATTER);
 	}
+	
+	/**
+	 * Ask end time.
+	 *
+	 * @param startTime the start time
+	 * @return the local time
+	 */
 	public LocalTime askEndTime(LocalTime startTime) {
-		System.out.println("Please input the endTime in the 24 hour format HH:MM");
+		System.out.println("Please input the end time in the 24 hour format HH:MM");
 		LocalTime output = LocalTime.parse(input.nextLine(), Event.TIMEFORMATTER);
 		if(output.isAfter(startTime)) {
 			return output;
@@ -410,6 +508,13 @@ public class MyCalendar {
 			return askEndTime(startTime);
 		}
 	}
+	
+	/**
+	 * Check event conflicts.
+	 *
+	 * @param newEvent the new event
+	 * @return true, if successful
+	 */
 	public boolean checkEventConflicts(Event newEvent) {
 		for(Event e : oneTimeEventList) {
 			if(e.getTimeInterval().conflictsWith(newEvent.getTimeInterval()) && e.getDate().equals(newEvent.getDate())) {
@@ -429,6 +534,9 @@ public class MyCalendar {
 		return false;
 	}
 
+	/**
+	 * Run.
+	 */
 	public void run() {
 		printInitialCalendar();
 		populateEvents();

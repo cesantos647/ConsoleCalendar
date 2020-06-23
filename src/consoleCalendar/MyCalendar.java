@@ -7,7 +7,7 @@
  *  Copyright Christian Santos to Present
  *  All rights reserved
  */
-package hw1;
+package consoleCalendar;
 
 import java.util.TreeSet;
 import java.time.LocalTime;

@@ -7,7 +7,7 @@
  *  Copyright Christian Santos to Present
  *  All rights reserved
  */
-package hw1;
+package consoleCalendar;
 
 /**
  * The Class MyCalendarTester runs the myCalendar application

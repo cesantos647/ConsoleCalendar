@@ -9,7 +9,8 @@ import java.util.HashSet;
 import java.util.HashMap;
 
 /**
- * The Class RecurringEvent.
+ * The Class RecurringEvent is an inherited class of Event
+ * and it managed extra event details specifically for recurring events
  *
  * @author christiansantos
  */
@@ -42,11 +43,11 @@ public class RecurringEvent extends Event{
 	/**
 	 * Instantiates a new recurring event.
 	 *
-	 * @param name the name
-	 * @param days the days
-	 * @param st the st
-	 * @param et the et
-	 * @param startDate the start date
+	 * @param name the name of the event
+	 * @param days the days of the event
+	 * @param st the start time of the event
+	 * @param et the end time of the event
+	 * @param startDate the start date of the event
 	 * @param endDate the end date
 	 */
 	public RecurringEvent(String name, String days, LocalTime st, LocalTime et, LocalDate startDate, LocalDate endDate) {
@@ -61,7 +62,7 @@ public class RecurringEvent extends Event{
 	}
 	
 	/**
-	 * Gets the days of week.
+	 * Gets the days of week that the event is on.
 	 *
 	 * @return the days of week
 	 */
@@ -70,7 +71,8 @@ public class RecurringEvent extends Event{
 	}
 
 	/**
-	 * Gets the days.
+	 * Gets the days of week that the event is on
+	 * in String format.
 	 *
 	 * @return the days
 	 */
@@ -79,7 +81,7 @@ public class RecurringEvent extends Event{
 	}
 
 	/**
-	 * Gets the start date.
+	 * Gets the start date of the recurring event.
 	 *
 	 * @return the startDate
 	 */
@@ -88,7 +90,7 @@ public class RecurringEvent extends Event{
 	}
 
 	/**
-	 * Gets the end date.
+	 * Gets the end date of the recurring event.
 	 *
 	 * @return the endDate
 	 */
@@ -97,19 +99,19 @@ public class RecurringEvent extends Event{
 	}
 	
 	/**
-	 * Checks if is within.
+	 * Checks if the date is within the date interval of the recurring event.
 	 *
-	 * @param date the date
-	 * @return true, if is within
+	 * @param date the date passed through
+	 * @return true, if the date is within the date interval of the recurring event
 	 */
 	public boolean isWithin(LocalDate date) {
 		return date.isAfter(getStartDate()) && date.isBefore(getEndDate()) || date.isEqual(getStartDate()) || date.isEqual(getEndDate());
 	}
 	
 	/**
-	 * To string.
+	 * Converts the RecurringEvent object to a readable string
 	 *
-	 * @return the string
+	 * @return the readable string
 	 */
 	@Override
 	public String toString() {

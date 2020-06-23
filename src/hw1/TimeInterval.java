@@ -7,7 +7,9 @@ import java.time.LocalTime;;
 
 
 /**
- * The Class TimeInterval.
+ * The Class TimeInterval contains the start and end time
+ * of a time interval and finds time conflicts between other
+ * TimeInterval objects.
  */
 public class TimeInterval {
 	
@@ -20,8 +22,8 @@ public class TimeInterval {
 	/**
 	 * Instantiates a new time interval.
 	 *
-	 * @param st the st
-	 * @param et the et
+	 * @param st the start time
+	 * @param et the end time
 	 */
 	public TimeInterval(LocalTime st, LocalTime et) {
 		startTime = st;
@@ -47,19 +49,20 @@ public class TimeInterval {
 	}
 
 	/**
-	 * Conflicts with.
+	 * Checks to see if the passed TimeInterval conflicts
+	 * with this TimeInterval.
 	 *
-	 * @param that the that
-	 * @return true, if successful
+	 * @param that the passed TimeInterval
+	 * @return true, if there is a time conflict between the TimeIntervals
 	 */
 	public boolean conflictsWith(TimeInterval that) {
 		return this.getStartTime().isBefore(that.getEndTime()) || this.getEndTime().isAfter(that.getStartTime());
 	}
 	
 	/**
-	 * To string.
+	 * Covnerts the TimeInterval object to a readable string
 	 *
-	 * @return the string
+	 * @return the readable string
 	 */
 	@Override
 	public String toString() {

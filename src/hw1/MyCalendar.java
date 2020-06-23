@@ -14,11 +14,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * The Class MyCalendar.
+ * The Class MyCalendar manages the event list,
+ * takes input from the user, and carries out
+ * user commands
  */
 public class MyCalendar {
 	
-	/** The input. */
+	/** The user input. */
 	private Scanner input = new Scanner(System.in);
 	
 	/** The one time event list. */
@@ -28,7 +30,7 @@ public class MyCalendar {
 	private TreeSet<RecurringEvent> recurringEventList =  new TreeSet<>();
 	
 	/**
-	 * Prints the initial calendar.
+	 * Prints the initial calendar at the beginning of the application.
 	 */
 	public void printInitialCalendar() {
 		LocalDate current = LocalDate.now();
@@ -64,7 +66,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Populate events.
+	 * Populate calendar with the events from events.txt
 	 */
 	public void populateEvents() {
 		try {
@@ -133,7 +135,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * View.
+	 * Redirects user to current day view or current month view
 	 */
 	public void view() {
 		System.out.println("[D]ay view or [M]onth view ?");
@@ -152,7 +154,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Go to.
+	 * Redirects user to day view of date inputed
 	 */
 	public void goTo() {
 		LocalDate newDate = askDate();
@@ -160,7 +162,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Event list.
+	 * Prints out all events on the calendar
 	 */
 	public void eventList() {
 		System.out.println("One Time Events");
@@ -176,7 +178,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Creates the event.
+	 * Creates an event from user input
 	 */
 	public void createEvent() {
 		String eventName = askName();
@@ -196,7 +198,8 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Delete event.
+	 * Redirects user to delete a one time event, all events on one day,
+	 * or a recurring event
 	 */
 	public void deleteEvent() {
 		System.out.println("Delete [S]elected  [A]ll   [DR]ecurring ? You may also [G]o back");
@@ -220,7 +223,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Quit.
+	 * Quits the application
 	 */
 	public void quit() {
 		System.out.println("Good Bye");
@@ -230,9 +233,9 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Day view.
+	 * Displays day view of the date inputed
 	 *
-	 * @param date the date
+	 * @param date the date inputed
 	 */
 	public void dayView(LocalDate date) {
 		
@@ -275,9 +278,9 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Month view.
+	 * Displays month view of the date inputed
 	 *
-	 * @param date the date
+	 * @param date the date inputed
 	 */
 	public void monthView(LocalDate date) {
 		//print out month view
@@ -333,10 +336,10 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Checks for events.
+	 * Checks for events on a given date
 	 *
-	 * @param date the date
-	 * @return true, if successful
+	 * @param date the date inputed
+	 * @return true if there are events on the given date
 	 */
 	public boolean hasEvents(LocalDate date) {
 		TreeSet<Event> dayEvents = new TreeSet<>();
@@ -354,7 +357,7 @@ public class MyCalendar {
 	}
 
 	/**
-	 * Delete single event.
+	 * Delete single event given the date and name
 	 */
 	public void deleteSingleEvent() {
 		LocalDate date = askDate();
@@ -401,7 +404,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Delete all on date.
+	 * Delete all events on given date
 	 */
 	public void deleteAllOnDate() {
 		TreeSet<Event> deletedEvents = new TreeSet<>();
@@ -418,7 +421,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Delete recurring.
+	 * Delete a recurring event based on name
 	 */
 	public void deleteRecurring() {
 		String name = askName();
@@ -439,7 +442,7 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Save events.
+	 * Save events onto output.txt
 	 */
 	public void saveEvents() {
 		try {
@@ -460,9 +463,9 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Ask date.
+	 * Asks user to input a desired date
 	 *
-	 * @return the local date
+	 * @return the date inputed by the user
 	 */
 	public LocalDate askDate() {
 		System.out.println("Please enter the date you want in the form MM/DD/YY");
@@ -471,9 +474,9 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Ask name.
+	 * Asks user to input a desired name
 	 *
-	 * @return the string
+	 * @return the name inputed by the user
 	 */
 	public String askName() {
 		System.out.println("Please enter the name of the event");
@@ -482,9 +485,9 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Ask start time.
+	 * Asks user to input a desierd start time.
 	 *
-	 * @return the local time
+	 * @return the start time inputed by the user
 	 */
 	public LocalTime askStartTime() {
 		System.out.println("Please input the start time in the 24 hour format HH:MM");
@@ -492,10 +495,10 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Ask end time.
+	 * Asks user to input a desired end time.
 	 *
-	 * @param startTime the start time
-	 * @return the local time
+	 * @param startTime the start time previously inputed
+	 * @return the end time inputed by the user
 	 */
 	public LocalTime askEndTime(LocalTime startTime) {
 		System.out.println("Please input the end time in the 24 hour format HH:MM");
@@ -510,10 +513,11 @@ public class MyCalendar {
 	}
 	
 	/**
-	 * Check event conflicts.
+	 * Check if there are any event conflicts between the event passed
+	 * and the rest of the calendar
 	 *
 	 * @param newEvent the new event
-	 * @return true, if successful
+	 * @return true, if there are any conflicts with an event on the calendar
 	 */
 	public boolean checkEventConflicts(Event newEvent) {
 		for(Event e : oneTimeEventList) {
@@ -535,7 +539,7 @@ public class MyCalendar {
 	}
 
 	/**
-	 * Run.
+	 * Run the application
 	 */
 	public void run() {
 		printInitialCalendar();
